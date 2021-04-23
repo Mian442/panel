@@ -34,6 +34,7 @@ import { toast } from "react-toastify";
 import Saving from "../Saving";
 import firebase from "firebase";
 import { AddRounded, VideoLibrary } from "@material-ui/icons";
+import Video from "../Video/Video";
 function LinearProgressWithLabel(props) {
   return (
     <Box display="flex" alignItems="center">
@@ -232,7 +233,8 @@ const UploadVideo = ({ history }) => {
               )}
               {uploading > 0 && <LinearProgressWithLabel value={uploading} />}
               {text !== "" && (
-                <Typography
+                <div>
+                  <Typography
                   variant="subtitle2"
                   style={{ paddingTop: 10, width: "100%" }}
                   color="primary"
@@ -240,6 +242,9 @@ const UploadVideo = ({ history }) => {
                   Download Url:{"\n\n"}
                   {text}
                 </Typography>
+                <Video src={text} />
+                </div>
+                
               )}
             </div>
           </div>

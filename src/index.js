@@ -7,13 +7,12 @@ import { Provider as ReduxProvider } from "react-redux";
 import MainStore from "./Redux/Store/MainStore";
 import * as firebase from "firebase";
 var firebaseConfig = {
-  apiKey: "AIzaSyB9bJ1QNBz2jJHDTBje03f2_GIduQNvLA0",
-  authDomain: "test-38207.firebaseapp.com",
-  projectId: "test-38207",
-  storageBucket: "test-38207.appspot.com",
-  messagingSenderId: "13956945037",
-  appId: "1:13956945037:web:ac1d7762159623987b7ec4",
-  measurementId: "G-Y0BS8C19QH",
+  apiKey: "AIzaSyB7jbL4TD4Nu2N9Hw6Gu27sc3-3Ahhh9yo",
+  authDomain: "vts-media-files.firebaseapp.com",
+  projectId: "vts-media-files",
+  storageBucket: "vts-media-files.appspot.com",
+  messagingSenderId: "721399661503",
+  appId: "1:721399661503:web:152350a984e971a1c7170a",
 };
 firebase.default.initializeApp(firebaseConfig);
 
