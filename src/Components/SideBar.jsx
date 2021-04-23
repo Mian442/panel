@@ -48,7 +48,7 @@ const SideBar = (props) => {
     },
     {
       name: "Upload a Video",
-      variant: props.var.UploadVideo,
+      variant: props.var.uploadVideo,
       icon: <BsCloudUpload fontSize={18} />,
       path: "upload-a-video",
       shown: true,

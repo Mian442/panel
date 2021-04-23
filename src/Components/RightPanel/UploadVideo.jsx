@@ -1,6 +1,9 @@
 import {
+  Box,
   Button,
   Fab,
+  IconButton,
+  LinearProgress,
   Paper,
   Table,
   TableBody,
@@ -29,6 +32,23 @@ import * as yup from "yup";
 import Loading from "../Loading";
 import { toast } from "react-toastify";
 import Saving from "../Saving";
+import firebase from "firebase";
+import { AddRounded, VideoLibrary } from "@material-ui/icons";
+function LinearProgressWithLabel(props) {
+  return (
+    <Box display="flex" alignItems="center">
+      <Box width="100%" mr={1}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box minWidth={35}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+        >{`${props.value}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
 const UploadVideo = ({ history }) => {
   const IS_LOGGED = useSelector((state) => state.User.IS_LOGGED);
   // if (!IS_LOGGED) {
@@ -36,7 +56,6 @@ const UploadVideo = ({ history }) => {
   // }
 
   const [text, setText] = useState("");
-  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [model, setModel] = useState(false);
@@ -44,6 +63,8 @@ const UploadVideo = ({ history }) => {
   const schema = yup.object().shape({
     name: yup.string().required(),
   });
+  const [uploading, setUploading] = useState(0);
+  const [video, setVideo] = useState(null);
   const allCategories = useSelector((state) => state.User.allCategories);
   const [data, setData] = useState(allCategories);
   const User = useSelector((state) => state.User.TOKEN);
@@ -58,14 +79,41 @@ const UploadVideo = ({ history }) => {
     // );
     // eslint-disable-next-line
   }, [dispatch]);
-  const list_filter = (e) => {
-    setData(
-      allCategories.filter(
-        (item) =>
-          item.name.toLowerCase().search(e.target.value.toLowerCase()) !== -1
-      )
+  // const list_filter = (e) => {
+  //   setData(
+  //     allCategories.filter(
+  //       (item) =>
+  //         item.name.toLowerCase().search(e.target.value.toLowerCase()) !== -1
+  //     )
+  //   );
+  //   setSearch(e.target.value);
+  // };
+  const videoUpload = (file) => {
+    const fireStore = firebase.storage();
+    const storeRef = fireStore.ref("/video/" + file.name);
+    const task = storeRef.put(file);
+    task.on(
+      "state_changed",
+      (p) => {
+        setUploading(Math.round((p.bytesTransferred / p.totalBytes) * 100));
+      },
+      (err) => {
+        toast.error(err.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      },
+      () => {
+        task.snapshot.ref.getDownloadURL().then((u) => {
+          setText(u);
+        });
+      }
     );
-    setSearch(e.target.value);
   };
   if (loading) {
     return <Loading />;
@@ -89,42 +137,112 @@ const UploadVideo = ({ history }) => {
           }}
           square
         >
-          <Button
-            color="primary"
-            style={{ marginInline: 12 }}
-            variant="contained"
-            size="large"
-            onClick={() => {
-              schema
-                .validate({ name: text }, { abortEarly: false })
-                .then((value) => {
-                  setTitle("Adding");
-                  setModel(true);
-                  console.log(User);
-                  // dispatch(
-                  //   ADD_CATEGORIES(
-                  //     { name: text, user: User.id },
-                  //     (d) => {
-                  //       setTimeout(() => {
-                  //         setModel(false);
-                  //         setData(d);
-                  //         setText("");
-                  //       }, 3000);
-                  //     },
-                  //     () => {
-                  //       setModel(false);
-                  //     }
-                  //   )
-                  // );
-                })
-                .catch((error) => {
-                  toast.error(error.errors[0]);
-                });
+          <div
+            style={{
+              margin: 20,
+              width: "93%",
+              flexDirection: "row",
             }}
+            className="video"
           >
-            <AiOutlineAppstoreAdd fontSize={24} />
-            Add
-          </Button>
+            <Typography
+              variant="h6"
+              style={{ paddingTop: 10, marginLeft: 20 }}
+              align="left"
+            >
+              Add Video
+            </Typography>
+            <input
+              accept="video/*"
+              style={{ display: "none" }}
+              id="icon-button-video-file"
+              type="file"
+              onChange={(e) => {
+                if (e.target.files[0].size / (1024 * 1024) <= 1000) {
+                  setUploading(0);
+                  setVideo(e.target.files[0]);
+                } else {
+                  toast.error("Video Size is Larger than 100MB");
+                }
+              }}
+            />
+            <label htmlFor="icon-button-video-file" style={{ display: "flex" }}>
+              <Typography
+                variant="subtitle1"
+                align="left"
+                style={{
+                  width: 60,
+                  paddingTop: 10,
+                  marginLeft: 20,
+                }}
+              >
+                Video
+              </Typography>
+              <IconButton
+                color="secondary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <VideoLibrary />
+              </IconButton>
+              {video === null ? null : (
+                <Typography
+                  variant="subtitle1"
+                  style={{ paddingTop: 10, width: "100%" }}
+                  color="secondary"
+                >
+                  {video.name} {(video.size / (1024 * 1024)).toFixed(4)}
+                  Mb
+                </Typography>
+              )}
+            </label>
+            <Button
+              color="primary"
+              variant="contained"
+              leftIcon={AddRounded}
+              style={{ margin: 20 }}
+              disabled={uploading === 0 || uploading === 100 ? false : true}
+              onClick={() => {
+                if (video !== null) {
+                  videoUpload(video);
+                } else {
+                  toast.error("Episode Info is Missing!");
+                }
+              }}
+            >
+              Add
+            </Button>
+            <div style={{ width: "100%" }}>
+              {uploading > 0 && uploading < 100 && (
+                <Typography
+                  variant="subtitle1"
+                  style={{ paddingTop: 10, width: "100%" }}
+                  color="primary"
+                >
+                  Uploading...
+                </Typography>
+              )}
+              {uploading === 100 && (
+                <Typography
+                  variant="subtitle1"
+                  style={{ paddingTop: 10, width: "100%", color: "green" }}
+                >
+                  Completed!
+                </Typography>
+              )}
+              {uploading > 0 && <LinearProgressWithLabel value={uploading} />}
+              {text !== "" && (
+                <Typography
+                  variant="subtitle2"
+                  style={{ paddingTop: 10, width: "100%" }}
+                  color="primary"
+                >
+                  Download Url:{"\n\n"}
+                  {text}
+                </Typography>
+              )}
+            </div>
+          </div>
         </Paper>
         <Typography align="center" variant="h3" style={{ marginBlock: 20 }}>
           Video List

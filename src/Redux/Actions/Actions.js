@@ -1,6 +1,6 @@
 import * as ActionList from "./ActionsList";
 // import API from "../../API/API";
-// import jwtdecode from "jwt-decode";
+import jwtdecode from "jwt-decode";
 import { toast } from "react-toastify";
 
 const SUCCESS = (msg) => {
@@ -43,7 +43,7 @@ export const TOKEN = (payload) => ({
 export const USER = (data) => {
   return async (dispatch) => {
     await window.localStorage.setItem("Token", data);
-    API.defaults.headers.common["x-auth-token"] = data;
+    // API.defaults.headers.common["x-auth-token"] = data;
     dispatch(TOKEN(jwtdecode(data)));
     dispatch(IS_LOGGED_IN());
   };

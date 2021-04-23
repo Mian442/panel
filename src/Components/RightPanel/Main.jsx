@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 // import { GET_DASHBOARD } from "../../Redux/Actions/Actions";
 import Loading from "../Loading";
-
+import firebase from "firebase";
+import { toast } from "react-toastify";
 const Main = ({ history }) => {
   const IS_LOGGED = useSelector((state) => state.User.IS_LOGGED);
   // if (!IS_LOGGED) {
@@ -12,6 +13,7 @@ const Main = ({ history }) => {
   // }
   const dashboard = useSelector((state) => state.User.dashboard);
   const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const list = [
     {
@@ -32,6 +34,7 @@ const Main = ({ history }) => {
       backgroundColor: "#ffecb3",
     },
   ];
+
   useEffect(() => {
     // dispatch();
     // GET_DASHBOARD(() => {

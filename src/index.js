@@ -5,6 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider as ReduxProvider } from "react-redux";
 import MainStore from "./Redux/Store/MainStore";
+import * as firebase from "firebase";
+var firebaseConfig = {
+  apiKey: "AIzaSyB9bJ1QNBz2jJHDTBje03f2_GIduQNvLA0",
+  authDomain: "test-38207.firebaseapp.com",
+  projectId: "test-38207",
+  storageBucket: "test-38207.appspot.com",
+  messagingSenderId: "13956945037",
+  appId: "1:13956945037:web:ac1d7762159623987b7ec4",
+  measurementId: "G-Y0BS8C19QH",
+};
+firebase.default.initializeApp(firebaseConfig);
+
 ReactDOM.render(
   <React.StrictMode>
     <ReduxProvider store={MainStore}>
