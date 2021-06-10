@@ -17,12 +17,12 @@ const Profile = ({ history }) => {
   const [text, setText] = useState({
     password: "",
     confirmPassword: "",
-    name: User?.name,
+    phNo: User?.phNo,
   });
   return (
     <div style={{ padding: 20, display: "flex", flexDirection: "column" }}>
       <Typography align="center" variant="h3" style={{ marginBlock: 20 }}>
-        Profile
+        Update Profile
       </Typography>
 
       <Paper
@@ -36,26 +36,16 @@ const Profile = ({ history }) => {
         }}
         square
       >
-        <Typography align="center" variant="h6" style={{ marginBlock: 10 }}>
-          {User?.name}
-        </Typography>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          style={{ marginBlock: 10 }}
-        >
-          {User?.email}
-        </Typography>
         <TextField
-          label="Name"
-          placeholder="Enter Name"
+          label="Phone no."
+          placeholder="Enter Phone no."
           onChange={(e) => {
-            setText({ ...text, name: e.target.value });
+            setText({ ...text, phNo: e.target.value });
           }}
           variant="outlined"
           style={{ width: "100%", marginBlock: 12 }}
           size="medium"
-          value={text.name}
+          value={text.phNo}
         />
         <TextField
           label="New Password"
@@ -95,13 +85,13 @@ const Profile = ({ history }) => {
               setModel(true);
               // dispatch(
               //   PROFILE_UPDATE(
-              //     { password: text.password, name: text.name, id: User.id },
+              //     { password: text.password, phNo: text.phNo, id: User.id },
               //     () => {
               //       setModel(false);
               //       setText({
               //         password: "",
               //         confirmPassword: "",
-              //         name: User?.name,
+              //         phNo: User?.phNo,
               //       });
               //     },
               //     () => {
@@ -115,7 +105,7 @@ const Profile = ({ history }) => {
           }}
         >
           <FiSave fontSize={24} />
-          Save
+          Save Changes
         </Button>
       </Paper>
       <Saving visible={model} title="Saving" />

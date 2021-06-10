@@ -8,18 +8,14 @@ import {
   ListSubheader,
 } from "@material-ui/core";
 import { withRouter } from "react-router";
-import { MdDashboard, MdLanguage } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsCloudUpload } from "react-icons/bs";
 import {
-  FaUserTie,
   FaUser,
   FaUserCog,
-  FaUserPlus,
   FaHourglassHalf,
-  FaPercent,
 } from "react-icons/fa";
-import { GiPriceTag } from "react-icons/gi";
 import { VscOutput, VscRunAll } from "react-icons/vsc";
 import { AiOutlineHistory } from "react-icons/ai";
 import { ImProfile } from "react-icons/im";
@@ -44,7 +40,7 @@ const SideBar = (props) => {
       variant: props.var.main,
       icon: <MdDashboard fontSize={18} />,
       path: "",
-      shown: false,
+      shown: true,
     },
     {
       name: "Upload a Video",
@@ -89,7 +85,7 @@ const SideBar = (props) => {
       shown: true,
     },
     {
-      name: "Profile",
+      name: "Update Profile",
       variant: props.var.profile,
       icon: <ImProfile fontSize={18} />,
       path: "profile",

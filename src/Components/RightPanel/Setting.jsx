@@ -22,7 +22,7 @@ const Setting = ({ history }) => {
   return (
     <div style={{ padding: 20, display: "flex", flexDirection: "column" }}>
       <Typography align="center" variant="h3" style={{ marginBlock: 20 }}>
-        Setting
+       Admin Setting
       </Typography>
 
       <Paper
@@ -36,19 +36,9 @@ const Setting = ({ history }) => {
         }}
         square
       >
-        <Typography align="center" variant="h6" style={{ marginBlock: 10 }}>
-          {User?.name}
-        </Typography>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          style={{ marginBlock: 10 }}
-        >
-          {User?.email}
-        </Typography>
         <TextField
-          label="Name"
-          placeholder="Enter Name"
+          label="Phone No."
+          placeholder="Enter Phone No."
           onChange={(e) => {
             setText({ ...text, name: e.target.value });
           }}

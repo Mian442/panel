@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Fab,
   IconButton,
   LinearProgress,
   Paper,
@@ -349,16 +348,7 @@ const UploadVideo = ({ history }) => {
             </Table>
           </TableContainer>
         </Paper>
-        <Fab
-          color="primary"
-          aria-label="download"
-          style={{ position: "fixed", right: 20, bottom: 20 }}
-          onClick={() => {
-            // dispatch(GET_CATEGORIES_PDF());
-          }}
-        >
-          <HiOutlineDocumentDownload fontSize={24} />
-        </Fab>
+      
         <Saving visible={model} title={title} />
       </div>
     );

@@ -21,12 +21,7 @@ const Main = ({ history }) => {
       title: "Registered Worker",
       backgroundColor: "#c5cae9",
     },
-    {
-      img: "/images/complain.png",
 
-      title: "Completed Orders",
-      backgroundColor: "#a7ffeb",
-    },
     {
       img: "/images/pending.png",
 
