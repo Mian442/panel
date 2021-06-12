@@ -43,6 +43,17 @@ const OutputFiles = ({ history }) => {
     //   })
     // );
   }, [dispatch]);
+  const [test,setTest]=useState([])
+useEffect(() => {
+  setTimeout(() => {
+    setTest([{user:{
+name:"Ali",
+email:"Ali@gmail.com"
+},
+category:"Vechical"}])
+  }, 10000);
+  },[]);
+
   if (loading) {
     return <Loading />;
   } else
@@ -63,7 +74,7 @@ const OutputFiles = ({ history }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allWorkers.map((item, i) => (
+                {test.map((item, i) => (
                   <TableRow key={i} style={{ cursor: "pointer" }}>
                     <TableCell
                       onClick={() => {
@@ -90,91 +101,7 @@ const OutputFiles = ({ history }) => {
                       {item.category}
                     </TableCell>
                     <TableCell>
-                      <div>
-                        <Button
-                          color="secondary"
-                          style={{ marginInline: 12 }}
-                          variant="contained"
-                          size="large"
-                          onClick={() => {
-                            setTitle("Deleting");
-                            setModel(true);
-                            // dispatch(
-                            //   DELETE_USER(
-                            //     item._id,
-                            //     "Worker",
-                            //     () => {
-                            //       setTimeout(() => {
-                            //         setModel(false);
-                            //       }, 3000);
-                            //     },
-                            //     () => {
-                            //       setModel(false);
-                            //     }
-                            //   )
-                            // );
-                          }}
-                        >
-                          <MdDeleteForever fontSize={24} />
-                          Delete
-                        </Button>
-                        {item.user?.restrict ? (
-                          <Button
-                            color="secondary"
-                            style={{ marginInline: 12 }}
-                            variant="contained"
-                            size="large"
-                            onClick={() => {
-                              setTitle("Adding Retractions");
-                              setModel(true);
-                              // dispatch(
-                              //   REMOVE_USER_RESTRICTION(
-                              //     item.user._id,
-                              //     "Worker",
-                              //     () => {
-                              //       setTimeout(() => {
-                              //         setModel(false);
-                              //       }, 3000);
-                              //     },
-                              //     () => {
-                              //       setModel(false);
-                              //     }
-                              //   )
-                              // );
-                            }}
-                          >
-                            Remove Retraction
-                          </Button>
-                        ) : (
-                          <Button
-                            color="secondary"
-                            style={{ marginInline: 12 }}
-                            variant="contained"
-                            size="large"
-                            onClick={() => {
-                              setTitle("Adding Retractions");
-                              setModel(true);
-                              // dispatch(
-                              //   RESTRICTS_USER(
-                              //     item.user._id,
-                              //     "Worker",
-                              //     () => {
-                              //       setTimeout(() => {
-                              //         setModel(false);
-                              //         setData();
-                              //       }, 3000);
-                              //     },
-                              //     () => {
-                              //       setModel(false);
-                              //     }
-                              //   )
-                              // );
-                            }}
-                          >
-                            Restrict
-                          </Button>
-                        )}
-                      </div>
+                              <a download href="https://drive.google.com/file/d/1WAMXc-i8vPRR8EXdOWalW_vQ13rgI5ws/view?usp=sharing">Download File</a>
                     </TableCell>
                   </TableRow>
                 ))}

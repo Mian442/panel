@@ -33,6 +33,7 @@ const RunModule = ({ history }) => {
           Run Module
         </Typography>
         <Paper elevation={8} style={{ padding: 20, marginBlock: 20 }} square>
+          
           <ComplaintsList data={allComplaint} />
         </Paper>
       </div>
